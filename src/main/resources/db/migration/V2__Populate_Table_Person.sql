@@ -1,0 +1,2 @@
+INSERT INTO `persons` (`id`, `address`, `first_name`, `gender`, `last_name`) VALUES (1, 'São Paulo', 'Gabriel', 'Male', 'Delazeri'),
+                                                                                    (2, 'Hogwarts', 'Harry', 'Male', 'Potter');
