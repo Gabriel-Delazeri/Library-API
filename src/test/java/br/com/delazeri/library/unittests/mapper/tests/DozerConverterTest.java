@@ -2,7 +2,7 @@ package br.com.delazeri.library.unittests.mapper.tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import br.com.delazeri.library.mapper.DozerMapper;
+import br.com.delazeri.library.mapper.config.DozerMapper;
 import br.com.delazeri.library.person.dtos.v1.PersonDTO;
 import br.com.delazeri.library.person.entities.Person;
 import br.com.delazeri.library.unittests.mapper.mocks.MockPerson;

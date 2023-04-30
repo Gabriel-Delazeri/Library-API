@@ -1,4 +1,4 @@
-package br.com.delazeri.library.mapper;
+package br.com.delazeri.library.mapper.config;
 
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;

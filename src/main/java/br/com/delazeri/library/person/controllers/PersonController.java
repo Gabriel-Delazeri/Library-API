@@ -1,6 +1,7 @@
 package br.com.delazeri.library.person.controllers;
 
 import br.com.delazeri.library.person.dtos.v1.PersonDTO;
+import br.com.delazeri.library.person.dtos.v2.PersonDTOV2;
 import br.com.delazeri.library.person.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -37,6 +38,15 @@ public class PersonController {
     )
     public ResponseEntity<PersonDTO> create(@RequestBody PersonDTO person) {
         return ResponseEntity.ok().body(service.create(person));
+    }
+
+    @PostMapping(
+            value = "/v2",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<PersonDTOV2> createV2(@RequestBody PersonDTOV2 person) {
+        return ResponseEntity.ok().body(service.createV2(person));
     }
 
     @PutMapping(
