@@ -1,12 +1,13 @@
 package br.com.delazeri.library.person.controllers;
 
-import br.com.delazeri.library.person.entities.Person;
+import br.com.delazeri.library.person.dtos.v1.PersonDTO;
 import br.com.delazeri.library.person.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,7 +18,8 @@ public class PersonController {
     PersonService service;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Person>> getAllPersons() {
+    public ResponseEntity<List<PersonDTO>> getAllPersons() {
+        List<PersonDTO> personDTOList = new ArrayList<>();
         return ResponseEntity.ok().body(service.findAll());
     }
 
@@ -25,7 +27,7 @@ public class PersonController {
             value = "{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Person> findById(@PathVariable Long id) {
+    public ResponseEntity<PersonDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok().body(service.findById(id));
     }
 
@@ -33,7 +35,7 @@ public class PersonController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Person> create(@RequestBody Person person) {
+    public ResponseEntity<PersonDTO> create(@RequestBody PersonDTO person) {
         return ResponseEntity.ok().body(service.create(person));
     }
 
@@ -41,7 +43,7 @@ public class PersonController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Person> update(@RequestBody Person person) {
+    public ResponseEntity<PersonDTO> update(@RequestBody PersonDTO person) {
         return ResponseEntity.ok().body(service.update(person));
     }
 

@@ -1,6 +1,8 @@
 package br.com.delazeri.library.person.services;
 
 import br.com.delazeri.library.exceptions.ResourceNotFoundException;
+import br.com.delazeri.library.mapper.DozerMapper;
+import br.com.delazeri.library.person.dtos.v1.PersonDTO;
 import br.com.delazeri.library.person.entities.Person;
 import br.com.delazeri.library.person.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,29 +16,32 @@ public class PersonService {
     @Autowired
     PersonRepository repository;
 
-    public List<Person> findAll() {
-        return repository.findAll();
+    public List<PersonDTO> findAll() {
+        return DozerMapper.parseListObjects(repository.findAll(), PersonDTO.class);
     }
 
-    public Person findById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
-    }
-
-    public Person create(Person person) {
-        return repository.save(person);
-    }
-
-    public Person update(Person person) {
-        var entity = repository.findById(person.getId())
+    public PersonDTO findById(Long id) {
+        Person person = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
 
-        entity.setFirstName(person.getFirstName());
-        entity.setLastName(person.getLastName());
-        entity.setAddress(person.getAddress());
-        entity.setGender(person.getGender());
+        return DozerMapper.parseObject(person, PersonDTO.class);
+    }
 
-        return repository.save(person);
+    public PersonDTO create(PersonDTO personDTO) {
+        Person person = DozerMapper.parseObject(personDTO, Person.class);
+        return DozerMapper.parseObject(repository.save(person), PersonDTO.class);
+    }
+
+    public PersonDTO update(PersonDTO personDTO) {
+        Person person = repository.findById(personDTO.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
+
+        person.setFirstName(person.getFirstName());
+        person.setLastName(person.getLastName());
+        person.setAddress(person.getAddress());
+        person.setGender(person.getGender());
+
+        return DozerMapper.parseObject(repository.save(person), PersonDTO.class);
     }
 
     public void delete(Long id) {
