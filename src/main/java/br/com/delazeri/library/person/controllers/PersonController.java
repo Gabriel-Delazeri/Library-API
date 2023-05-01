@@ -3,8 +3,8 @@ package br.com.delazeri.library.person.controllers;
 import br.com.delazeri.library.person.dtos.v1.PersonDTO;
 import br.com.delazeri.library.person.dtos.v2.PersonDTOV2;
 import br.com.delazeri.library.person.services.PersonService;
+import br.com.delazeri.library.util.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +18,13 @@ public class PersonController {
     @Autowired
     PersonService service;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(
+            produces = {
+                    MediaType.APPLICATION_JSON,
+                    MediaType.APPLICATION_XML,
+                    MediaType.APPLICATION_YML
+        }
+    )
     public ResponseEntity<List<PersonDTO>> getAllPersons() {
         List<PersonDTO> personDTOList = new ArrayList<>();
         return ResponseEntity.ok().body(service.findAll());
@@ -26,15 +32,27 @@ public class PersonController {
 
     @GetMapping(
             value = "{id}",
-            produces = MediaType.APPLICATION_JSON_VALUE
+            produces = {
+                    MediaType.APPLICATION_JSON,
+                    MediaType.APPLICATION_XML,
+                    MediaType.APPLICATION_YML
+            }
     )
     public ResponseEntity<PersonDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok().body(service.findById(id));
     }
 
     @PostMapping(
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE
+            consumes = {
+                    MediaType.APPLICATION_JSON,
+                    MediaType.APPLICATION_XML,
+                    MediaType.APPLICATION_YML
+            },
+            produces = {
+                    MediaType.APPLICATION_JSON,
+                    MediaType.APPLICATION_XML,
+                    MediaType.APPLICATION_YML
+            }
     )
     public ResponseEntity<PersonDTO> create(@RequestBody PersonDTO person) {
         return ResponseEntity.ok().body(service.create(person));
@@ -42,16 +60,32 @@ public class PersonController {
 
     @PostMapping(
             value = "/v2",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE
+            consumes = {
+                    MediaType.APPLICATION_JSON,
+                    MediaType.APPLICATION_XML,
+                    MediaType.APPLICATION_YML
+            },
+            produces = {
+                    MediaType.APPLICATION_JSON,
+                    MediaType.APPLICATION_XML,
+                    MediaType.APPLICATION_YML
+            }
     )
     public ResponseEntity<PersonDTOV2> createV2(@RequestBody PersonDTOV2 person) {
         return ResponseEntity.ok().body(service.createV2(person));
     }
 
     @PutMapping(
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE
+            consumes = {
+                    MediaType.APPLICATION_JSON,
+                    MediaType.APPLICATION_XML,
+                    MediaType.APPLICATION_YML
+            },
+            produces = {
+                    MediaType.APPLICATION_JSON,
+                    MediaType.APPLICATION_XML,
+                    MediaType.APPLICATION_YML
+            }
     )
     public ResponseEntity<PersonDTO> update(@RequestBody PersonDTO person) {
         return ResponseEntity.ok().body(service.update(person));
