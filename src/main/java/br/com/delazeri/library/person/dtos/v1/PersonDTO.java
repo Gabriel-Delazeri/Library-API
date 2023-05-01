@@ -2,7 +2,6 @@ package br.com.delazeri.library.person.dtos.v1;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
