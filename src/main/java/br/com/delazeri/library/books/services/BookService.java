@@ -1,5 +1,6 @@
 package br.com.delazeri.library.books.services;
 
+import br.com.delazeri.library.books.controllers.BookController;
 import br.com.delazeri.library.books.dtos.BookDTO;
 import br.com.delazeri.library.books.entities.Book;
 import br.com.delazeri.library.books.repositories.BookRepository;
@@ -7,6 +8,8 @@ import br.com.delazeri.library.exceptions.ResourceNotFoundException;
 import br.com.delazeri.library.mapper.config.DozerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 import java.util.List;
 
@@ -17,21 +20,30 @@ public class BookService {
     BookRepository repository;
 
     public List<BookDTO> getAll() {
-        return DozerMapper.parseListObjects(repository.findAll(), BookDTO.class);
+        List<BookDTO> bookDTOList = DozerMapper.parseListObjects(repository.findAll(), BookDTO.class);
+
+        bookDTOList.forEach(
+                bookDTO -> bookDTO.add(linkTo(methodOn(BookController.class).findById(bookDTO.getKey())).withSelfRel())
+        );
+
+        return bookDTOList;
     }
 
     public BookDTO getById(Long id) {
         Book book = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
 
-        return DozerMapper.parseObject(book, BookDTO.class);
+        BookDTO bookDTO = DozerMapper.parseObject(book, BookDTO.class);
+        bookDTO.add(linkTo(methodOn(BookController.class).findById(bookDTO.getKey())).withSelfRel());
+        return bookDTO;
     }
 
     public BookDTO create(BookDTO bookDTO) {
         Book book = DozerMapper.parseObject(bookDTO, Book.class);
-        System.out.println(book.toString());
 
-        return DozerMapper.parseObject(repository.save(book), BookDTO.class);
+        bookDTO = DozerMapper.parseObject(repository.save(book), BookDTO.class);
+        bookDTO.add(linkTo(methodOn(BookController.class).findById(bookDTO.getKey())).withSelfRel());
+        return bookDTO;
     }
 
     public BookDTO update(BookDTO bookDTO) {
@@ -43,7 +55,9 @@ public class BookService {
         book.setPrice(bookDTO.getPrice());
         book.setLaunchDate(bookDTO.getLaunchDate());
 
-        return DozerMapper.parseObject(repository.save(book), BookDTO.class);
+        bookDTO = DozerMapper.parseObject(repository.save(book), BookDTO.class);
+        bookDTO.add(linkTo(methodOn(BookController.class).findById(bookDTO.getKey())).withSelfRel());
+        return bookDTO;
     }
 
     public void delete(Long id) {

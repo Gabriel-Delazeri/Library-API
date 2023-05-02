@@ -35,7 +35,7 @@ public class BookController {
                     MediaType.APPLICATION_YML
             }
     )
-    public ResponseEntity<BookDTO> getById(@PathVariable Long id) {
+    public ResponseEntity<BookDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok().body(service.getById(id));
     }
 
