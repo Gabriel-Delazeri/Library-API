@@ -4,6 +4,7 @@ import br.com.delazeri.library.books.controllers.BookController;
 import br.com.delazeri.library.books.dtos.BookDTO;
 import br.com.delazeri.library.books.entities.Book;
 import br.com.delazeri.library.books.repositories.BookRepository;
+import br.com.delazeri.library.exceptions.RequiredObjectIsNullException;
 import br.com.delazeri.library.exceptions.ResourceNotFoundException;
 import br.com.delazeri.library.mapper.config.DozerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,9 @@ public class BookService {
     }
 
     public BookDTO create(BookDTO bookDTO) {
+
+        if (bookDTO == null) throw new RequiredObjectIsNullException();
+
         Book book = DozerMapper.parseObject(bookDTO, Book.class);
 
         bookDTO = DozerMapper.parseObject(repository.save(book), BookDTO.class);
@@ -47,6 +51,9 @@ public class BookService {
     }
 
     public BookDTO update(BookDTO bookDTO) {
+
+        if (bookDTO == null) throw new RequiredObjectIsNullException();
+
         Book book = repository.findById(bookDTO.getKey())
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
 
