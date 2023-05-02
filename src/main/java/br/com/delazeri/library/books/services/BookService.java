@@ -20,7 +20,7 @@ public class BookService {
     @Autowired
     BookRepository repository;
 
-    public List<BookDTO> getAll() {
+    public List<BookDTO> findAll() {
         List<BookDTO> bookDTOList = DozerMapper.parseListObjects(repository.findAll(), BookDTO.class);
 
         bookDTOList.forEach(
@@ -30,7 +30,7 @@ public class BookService {
         return bookDTOList;
     }
 
-    public BookDTO getById(Long id) {
+    public BookDTO findById(Long id) {
         Book book = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
 
