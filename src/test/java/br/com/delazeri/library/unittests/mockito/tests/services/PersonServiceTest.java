@@ -1,4 +1,4 @@
-package br.com.delazeri.library.unittests.mockito.services;
+package br.com.delazeri.library.unittests.mockito.tests.services;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -8,7 +8,7 @@ import br.com.delazeri.library.person.dtos.v1.PersonDTO;
 import br.com.delazeri.library.person.entities.Person;
 import br.com.delazeri.library.person.repositories.PersonRepository;
 import br.com.delazeri.library.person.services.PersonService;
-import br.com.delazeri.library.unittests.mapper.mocks.MockPerson;
+import br.com.delazeri.library.unittests.mockito.mocks.MockPerson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
