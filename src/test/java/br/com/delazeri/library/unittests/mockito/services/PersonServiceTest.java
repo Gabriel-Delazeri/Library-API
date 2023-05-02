@@ -18,7 +18,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +39,17 @@ public class PersonServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
+    void basicAssertions(PersonDTO result) {
+        assertNotNull(result);
+        assertNotNull(result.getKey());
+        assertNotNull(result.getLinks());
+        assertTrue(result.toString().contains("links: [</api/person/v1/" + result.getKey() + ">;rel=\"self\"]"));
+        assertEquals("Addres Test"+ result.getKey(), result.getAddress());
+        assertEquals("First Name Test"+ result.getKey(), result.getFirstName());
+        assertEquals("Last Name Test"+ result.getKey(), result.getLastName());
+        assertEquals(result.getKey() % 2 == 0 ? "Male" : "Female", result.getGender());
+    }
+
     @Test
     void testFindAll() {
         List<Person> personList = input.mockEntityList();
@@ -51,25 +61,8 @@ public class PersonServiceTest {
         assertNotNull(personDTOList);
         assertEquals(14, personDTOList.size());
 
-        PersonDTO result1 = personDTOList.get(1);
-        assertNotNull(result1);
-        assertNotNull(result1.getKey());
-        assertNotNull(result1.getLinks());
-        assertTrue(result1.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
-        assertEquals("Addres Test1", result1.getAddress());
-        assertEquals("First Name Test1", result1.getFirstName());
-        assertEquals("Last Name Test1", result1.getLastName());
-        assertEquals("Female", result1.getGender());
-
-        PersonDTO result4 = personDTOList.get(4);
-        assertNotNull(result4);
-        assertNotNull(result4.getKey());
-        assertNotNull(result4.getLinks());
-        assertTrue(result4.toString().contains("links: [</api/person/v1/4>;rel=\"self\"]"));
-        assertEquals("Addres Test4", result4.getAddress());
-        assertEquals("First Name Test4", result4.getFirstName());
-        assertEquals("Last Name Test4", result4.getLastName());
-        assertEquals("Male", result4.getGender());
+        basicAssertions(personDTOList.get(1));
+        basicAssertions(personDTOList.get(3));
     }
 
     @Test
@@ -79,15 +72,7 @@ public class PersonServiceTest {
 
         when(repository.findById(1L)).thenReturn(Optional.of(entity));
 
-        PersonDTO personDTO = service.findById(1L);
-        assertNotNull(personDTO);
-        assertNotNull(personDTO.getKey());
-        assertNotNull(personDTO.getLinks());
-        assertTrue(personDTO.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
-        assertEquals("Addres Test1", personDTO.getAddress());
-        assertEquals("First Name Test1", personDTO.getFirstName());
-        assertEquals("Last Name Test1", personDTO.getLastName());
-        assertEquals("Female", personDTO.getGender());
+        basicAssertions(service.findById(1L));
     }
 
     @Test
@@ -103,15 +88,7 @@ public class PersonServiceTest {
         when(repository.save(person))
                 .thenReturn(persistedPerson);
 
-        PersonDTO result = service.create(personDTO);
-        assertNotNull(result);
-        assertNotNull(result.getKey());
-        assertNotNull(result.getLinks());
-        assertTrue(result.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
-        assertEquals("Addres Test1", result.getAddress());
-        assertEquals("First Name Test1", result.getFirstName());
-        assertEquals("Last Name Test1", result.getLastName());
-        assertEquals("Female", result.getGender());
+        basicAssertions(service.create(personDTO));
     }
 
     @Test
@@ -141,16 +118,7 @@ public class PersonServiceTest {
         when(repository.save(person))
                 .thenReturn(person);
 
-        PersonDTO result = service.update(personDTO);
-
-        assertNotNull(result);
-        assertNotNull(result.getKey());
-        assertNotNull(result.getLinks());
-        assertTrue(result.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
-        assertEquals("Addres Test1", result.getAddress());
-        assertEquals("First Name Test1", result.getFirstName());
-        assertEquals("Last Name Test1", result.getLastName());
-        assertEquals("Female", result.getGender());
+        basicAssertions(service.update(personDTO));
     }
 
     @Test
