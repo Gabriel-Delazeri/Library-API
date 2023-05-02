@@ -1,4 +1,4 @@
-package br.com.delazeri.library.unittests.mapper.mocks;
+package br.com.delazeri.library.unittests.mockito.mocks;
 
 import br.com.delazeri.library.person.dtos.v1.PersonDTO;
 import br.com.delazeri.library.person.entities.Person;
