@@ -16,7 +16,8 @@
     <properties>
         <java.version>17</java.version>
         <dozer.version>6.4.0</dozer.version>
-        <spreingdoc.version>2.0.2</spreingdoc.version>
+        <springdoc.version>2.0.2</springdoc.version>
+        <rest-assured.version>4.5.0</rest-assured.version>
     </properties>
     <dependencies>
         <dependency>
@@ -46,7 +47,7 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>${spreingdoc.version}</version>
+            <version>${springdoc.version}</version>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
@@ -69,6 +70,17 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <version>1.18.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
