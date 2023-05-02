@@ -2,7 +2,6 @@ package br.com.delazeri.library.books.controllers;
 
 import br.com.delazeri.library.books.dtos.BookDTO;
 import br.com.delazeri.library.books.services.BookService;
-import br.com.delazeri.library.person.dtos.v1.PersonDTO;
 import br.com.delazeri.library.util.MediaType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -56,7 +55,7 @@ public class BookController {
             }
     )
     public ResponseEntity<List<BookDTO>> getAllBooks() {
-        return ResponseEntity.ok().body(service.getAll());
+        return ResponseEntity.ok().body(service.findAll());
     }
 
     @GetMapping(
@@ -86,7 +85,7 @@ public class BookController {
             }
     )
     public ResponseEntity<BookDTO> findById(@PathVariable Long id) {
-        return ResponseEntity.ok().body(service.getById(id));
+        return ResponseEntity.ok().body(service.findById(id));
     }
 
     @PostMapping(
