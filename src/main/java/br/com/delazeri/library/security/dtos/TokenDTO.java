@@ -1,4 +1,4 @@
-package br.com.delazeri.library.user.dtos;
+package br.com.delazeri.library.security.dtos;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package br.com.delazeri.library.user.entities;
+package br.com.delazeri.library.security.entities;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;

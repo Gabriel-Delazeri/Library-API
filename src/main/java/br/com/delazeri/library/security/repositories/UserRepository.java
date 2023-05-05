@@ -1,6 +1,6 @@
-package br.com.delazeri.library.user.repositories;
+package br.com.delazeri.library.security.repositories;
 
-import br.com.delazeri.library.user.entities.User;
+import br.com.delazeri.library.security.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
